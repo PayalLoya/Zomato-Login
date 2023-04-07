@@ -67,4 +67,17 @@ router.post("/login", (req, res) => {
   });
 });
 
+//userinfo
+router.get("/userInfo", (req, res) => {
+  let token = req.headers["x-auth-token"];
+  if (!token) res.send({ auth: false, token: "No token provided" });
+  //jwt verify
+  jwt.verify(token, config.secret, (err, user) => {
+    if (err) res.send({ auth: false, token: "Invalid token" });
+    user.findById(user.id, (err, result) => {
+      res.send(result);
+    });
+  });
+});
+
 module.exports = router;
