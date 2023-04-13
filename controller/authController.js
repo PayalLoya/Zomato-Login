@@ -75,7 +75,7 @@ router.get("/userInfo", (req, res) => {
   jwt.verify(token, config.secret, (err, user) => {
     if (err) res.send({ auth: false, token: "Invalid token" });
     User.findById(user.id, (err, result) => {
-      res.json(result);
+      res.send(result);
     });
   });
 });
